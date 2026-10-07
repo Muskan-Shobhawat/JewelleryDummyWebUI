@@ -1,14 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  reactStrictMode: true,
+  // Hide the Next.js dev-tools badge (the floating "N") during `next dev`
+  devIndicators: false,
+  images: { unoptimized: true },
   turbopack: {
     rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
+      "*.css": { loaders: ["@tailwindcss/turbopack"], as: "*.css" },
     },
   },
 };

@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Kanak Jewellers – Demo Website (Next.js)
 
-## Getting Started
+Responsive, mobile-first storefront for the Kanak Jewellers demo. Talks to the backend in `JewelleryDummyBackend`.
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# 1. start the API (in JewelleryDummyBackend)
+npm run dev            # http://localhost:4000
+
+# 2. start this site
+cp .env.example .env.local   # NEXT_PUBLIC_API_URL=http://localhost:4000/api
+npm install
+npm run dev            # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Demo login: mobile `9999999999`, OTP `123456` (any other number creates a fresh customer).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js 16 (App Router, JavaScript), React 19
+- Tailwind CSS v4. Theme tokens (purple `#4A1942`, cream `#F7EFEA`, accent gold) live in `src/app/globals.css` and are overridden at runtime from `GET /api/config`, so a rebrand needs no code change.
+- SWR for data fetching, lucide-react icons, Playfair Display + DM Sans via `next/font`.
 
-## Learn More
+## Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/app/                 routes (all client components)
+  page.js                home: hero carousel, live rate ticker, categories, scheme tiles, product rails
+  jewellery/             listing with filters + product detail (price breakup, WhatsApp order, express interest)
+  digi-gold, ema, book-my-gold, advance-gold, gift-cards
+  cart, checkout, orders/[id], track-order
+  wallet, transactions, wishlist, interests, notifications, profile, login
+  contact, about, faq, search, pages/[slug]
+src/components/          layout (header, footer, bottom nav, login sheet), ui (modal, mock checkout, bits), home, product, schemes
+src/context/             config/theme, auth, cart, toast, payment (mock gateway)
+src/lib/                 api client (SWR), formatters
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Key flows
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Payments**: any purchase returns a checkout payload; `PaymentContext.openCheckout()` shows a mock gateway (UPI, card, net banking, "simulate failure"), confirms with the API and runs the success callback.
+- **Login**: `useAuth().requireLogin(cb)` opens the OTP sheet anywhere and runs `cb` after login.
+- **Live rates**: `RateTicker` subscribes to `/rates/stream` (SSE) with a 30s polling fallback.
+- **Mobile**: sticky header, bottom navigation (Home, Jewellery, Wallet, My Txn, Contact), bottom-sheet modals, horizontal rails.
