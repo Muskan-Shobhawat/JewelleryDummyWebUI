@@ -1,8 +1,9 @@
 'use client';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { Heart, MessageCircle, ShoppingBag, Sparkles, ShieldCheck, ChevronDown, Share2 } from 'lucide-react';
+import { Heart, ShoppingBag, Sparkles, ShieldCheck, ChevronDown, Share2 } from 'lucide-react';
 import { useApi, post } from '@/lib/api';
 import { Img, Skeleton, Badge, SectionHeader } from '@/components/ui/Bits';
 import PriceBreakdown from '@/components/product/PriceBreakdown';
@@ -58,7 +59,7 @@ export default function ProductPage() {
           <div className="mt-5 grid gap-2 sm:grid-cols-2">
             {!p.price.priceOnCall && p.inStock && <><button onClick={addToBag} className="btn-outline"><ShoppingBag size={18} />Add to bag</button><button onClick={buyNow} className="btn-primary">Buy now</button></>}
             {!p.inStock && <p className="rounded-xl bg-danger/10 px-4 py-3 text-center text-sm font-semibold text-danger sm:col-span-2">Currently sold out. Enquire for a similar piece.</p>}
-            <a href={p.whatsappUrl} target="_blank" rel="noreferrer" className="btn-whatsapp sm:col-span-2"><MessageCircle size={18} />{p.price.priceOnCall ? 'Get a quote on WhatsApp' : 'Order on WhatsApp'}</a>
+            <a href={p.whatsappUrl} target="_blank" rel="noreferrer" className="btn-whatsapp sm:col-span-2"><WhatsAppIcon size={18} />{p.price.priceOnCall ? 'Get a quote on WhatsApp' : 'Order on WhatsApp'}</a>
           </div>
           <div className="mt-4 rounded-2xl border border-cream-dark p-4">
             <p className="flex items-center gap-2 text-sm font-semibold text-primary"><Sparkles size={16} />Express interest</p>

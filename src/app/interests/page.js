@@ -1,7 +1,8 @@
 'use client';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, MessageCircle, CalendarClock, Trash2 } from 'lucide-react';
+import { Sparkles, CalendarClock, Trash2 } from 'lucide-react';
 import { useApi, del } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
@@ -32,7 +33,7 @@ export default function InterestsPage() {
                 {i.quoteAmount && <p className="mt-1 text-sm font-bold text-primary">Quote {inr(i.quoteAmount)}</p>}
                 {i.consultationAt && <p className="mt-1 flex items-center gap-1 text-xs text-muted"><CalendarClock size={12} />{fmtDateTime(i.consultationAt)}{i.branch ? ` • ${i.branch.name}` : ''}</p>}
                 {i.note && <p className="mt-1 text-xs text-muted">“{i.note}”</p>}
-                <div className="mt-2 flex gap-2"><a href={i.product?.whatsappUrl} target="_blank" rel="noreferrer" className="btn-whatsapp !px-3 !py-1.5 text-xs"><MessageCircle size={13} />WhatsApp</a>{i.product && !i.product.price?.priceOnCall && <Link href={`/jewellery/${i.product.slug}`} className="btn-outline !px-3 !py-1.5 text-xs">Buy now</Link>}</div>
+                <div className="mt-2 flex gap-2"><a href={i.product?.whatsappUrl} target="_blank" rel="noreferrer" className="btn-whatsapp !px-3 !py-1.5 text-xs"><WhatsAppIcon size={13} />WhatsApp</a>{i.product && !i.product.price?.priceOnCall && <Link href={`/jewellery/${i.product.slug}`} className="btn-outline !px-3 !py-1.5 text-xs">Buy now</Link>}</div>
               </div>
             </div>))}</div>
         </>)}

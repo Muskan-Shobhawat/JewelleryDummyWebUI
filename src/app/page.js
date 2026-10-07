@@ -1,6 +1,7 @@
 'use client';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import Link from 'next/link';
-import { MessageCircle } from 'lucide-react';
+
 import { useApi } from '@/lib/api';
 import { useConfig } from '@/context/ConfigContext';
 import { SectionHeader } from '@/components/ui/Bits';
@@ -33,7 +34,7 @@ export default function HomePage() {
         <p className="eyebrow">Concierge</p>
         <h2 className="mt-1 font-heading text-2xl font-semibold text-primary sm:text-3xl">Looking for something special?</h2>
         <p className="mx-auto mt-2 max-w-xl text-sm text-muted">Share a design or a budget on WhatsApp and our team will send custom quotes, video previews and showroom appointments.</p>
-        <div className="mt-5 flex flex-wrap justify-center gap-3"><a href={config.contact.whatsappUrl} target="_blank" rel="noreferrer" className="btn-whatsapp"><MessageCircle size={18} />Chat on WhatsApp</a><Link href="/contact" className="btn-outline">Visit a showroom</Link></div>
+        <div className="mt-5 flex flex-wrap justify-center gap-3"><a href={config.contact.whatsappUrl} target="_blank" rel="noreferrer" className="btn-whatsapp"><WhatsAppIcon size={18} />Chat on WhatsApp</a><Link href="/contact" className="btn-outline">Visit a showroom</Link></div>
       </section>
     </div>
   );

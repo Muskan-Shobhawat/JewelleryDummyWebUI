@@ -1,8 +1,9 @@
 'use client';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
-import { CheckCircle2, MapPin, MessageCircle } from 'lucide-react';
+import { CheckCircle2, MapPin } from 'lucide-react';
 import { useApi, post } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
@@ -34,7 +35,7 @@ function Inner() {
         <div className="space-y-4">
           <div className="card p-5"><p className="font-semibold text-primary">Payment</p><Row label="Item price" value={inr(o.subtotal - o.makingCharges)} /><Row label="Making charges" value={inr(o.makingCharges)} />{o.discount > 0 && <Row label={`Discount${o.couponCode ? ` (${o.couponCode})` : ''}`} value={`- ${inr(o.discount)}`} />}<Row label="GST" value={inr(o.gst)} /><Row label="Shipping" value={o.shipping ? inr(o.shipping) : 'FREE'} /><Row label="Total" value={inr(o.total)} bold /><p className="mt-2 text-xs text-muted">{o.payment.method} • {o.payment.status}</p></div>
           <div className="card p-5"><p className="flex items-center gap-2 font-semibold text-primary"><MapPin size={16} />{o.delivery === 'PICKUP' ? 'Showroom pickup' : 'Delivery address'}</p><p className="mt-2 text-sm">{o.delivery === 'PICKUP' ? o.branchName : [o.address?.line1, o.address?.line2, o.address?.landmark, o.address?.city, o.address?.state, o.address?.pincode].filter(Boolean).join(', ')}</p></div>
-          <a href={`https://wa.me/${config.contact.whatsappNumber}?text=${encodeURIComponent(`Hello, I need help with my order ${o.orderNo}.`)}`} target="_blank" rel="noreferrer" className="btn-whatsapp w-full"><MessageCircle size={16} />Help with this order</a>
+          <a href={`https://wa.me/${config.contact.whatsappNumber}?text=${encodeURIComponent(`Hello, I need help with my order ${o.orderNo}.`)}`} target="_blank" rel="noreferrer" className="btn-whatsapp w-full"><WhatsAppIcon size={16} />Help with this order</a>
           {['PENDING_PAYMENT', 'CONFIRMED'].includes(o.status) && <button onClick={cancel} className="btn-outline w-full text-danger">Cancel order</button>}
         </div>
       </div>

@@ -1,12 +1,13 @@
 'use client';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { useState } from 'react';
-import { MessageCircle, Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { useApi, post } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
 import { Skeleton, PageTitle, Spinner } from '@/components/ui/Bits';
 
-const ICON = { WHATSAPP: MessageCircle, CALL: Phone, EMAIL: Mail };
+const ICON = { WHATSAPP: WhatsAppIcon, CALL: Phone, EMAIL: Mail };
 export default function ContactPage() {
   const { data } = useApi('/contact');
   const { user } = useAuth();

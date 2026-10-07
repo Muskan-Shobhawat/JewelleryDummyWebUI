@@ -1,8 +1,9 @@
 'use client';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Trash2, Minus, Plus, MessageCircle, ShoppingBag, Tag } from 'lucide-react';
+import { Trash2, Minus, Plus, ShoppingBag, Tag } from 'lucide-react';
 import { post } from '@/lib/api';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
@@ -53,7 +54,7 @@ export default function CartPage() {
           {preview ? <div className="mt-3"><Row label="Subtotal" value={inr(preview.subtotal)} /><Row label="Making charges (incl.)" value={inr(preview.makingCharges)} />{preview.discount > 0 && <Row label="Discount" value={`- ${inr(preview.discount)}`} />}<Row label={`GST ${preview.gstPct}%`} value={inr(preview.gst)} /><Row label="Shipping" value={preview.shipping ? inr(preview.shipping) : 'FREE'} /><Row label="Total" value={inr(preview.total)} bold /><p className="mt-1 text-[11px] text-muted">Free insured shipping above {inr(preview.freeShippingAbove)}.</p></div> : !error && cart.items.some((i) => !i.priceOnCall) && <Skeleton className="mt-3 h-28" />}
           <div className="mt-4 grid gap-2">
             {preview && <button onClick={() => requireLogin(() => router.push('/checkout'))} className="btn-primary w-full">Checkout {inr(preview.total)}</button>}
-            <button onClick={whatsapp} className="btn-whatsapp w-full"><MessageCircle size={16} />Order on WhatsApp</button>
+            <button onClick={whatsapp} className="btn-whatsapp w-full"><WhatsAppIcon size={16} />Order on WhatsApp</button>
             <Link href="/jewellery" className="btn-ghost w-full">Continue shopping</Link>
           </div>
         </div>

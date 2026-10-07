@@ -1,6 +1,7 @@
 'use client';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import Link from 'next/link';
-import { Heart, MessageCircle, ShoppingBag } from 'lucide-react';
+import { Heart, ShoppingBag } from 'lucide-react';
 import { Img } from '@/components/ui/Bits';
 import { inr, cls } from '@/lib/format';
 import { useWishlist } from './useWishlist';
@@ -26,7 +27,7 @@ export default function ProductCard({ product: p, compact = false }) {
         <div className="mt-auto pt-2">
           {p.price?.priceOnCall ? <p className="text-sm font-bold text-primary">Price on call</p> : <p className="text-base font-bold text-primary">{inr(p.price?.total)}{p.price?.mrp && <span className="ml-1.5 text-xs font-normal text-muted line-through">{inr(p.price.mrp)}</span>}</p>}
           {!compact && <div className="mt-2 flex gap-1.5">
-            <a href={p.whatsappUrl} target="_blank" rel="noreferrer" className="btn-whatsapp flex-1 !px-2 !py-2 text-xs"><MessageCircle size={14} />{p.price?.priceOnCall ? 'Enquire' : 'Order'}</a>
+            <a href={p.whatsappUrl} target="_blank" rel="noreferrer" className="btn-whatsapp flex-1 !px-2 !py-2 text-xs"><WhatsAppIcon size={14} />{p.price?.priceOnCall ? 'Enquire' : 'Order'}</a>
             {!p.price?.priceOnCall && p.inStock && <button onClick={() => { cart.add(p); toast(`${p.name} added to bag`); }} className="btn-outline !px-2.5 !py-2" aria-label="Add to bag"><ShoppingBag size={15} /></button>}
           </div>}
         </div>

@@ -1,8 +1,9 @@
 'use client';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, Search, Heart, ShoppingBag, User, Bell, X, LogOut, Wallet, Receipt, Sparkles, MessageCircle } from 'lucide-react';
+import { Menu, Search, Heart, ShoppingBag, User, Bell, X, LogOut, Wallet, Receipt, Sparkles } from 'lucide-react';
 import { useConfig } from '@/context/ConfigContext';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
@@ -60,7 +61,7 @@ export default function Header() {
               {config.nav.map((n) => <Link key={n.path} href={n.path} onClick={() => setMenu(false)} className={cls('block px-5 py-3 text-sm font-medium', path === n.path ? 'bg-cream text-primary' : 'text-ink')}>{n.label}</Link>)}
               <div className="my-2 border-t border-cream-dark" />
               {[{ h: '/wallet', l: 'My Wallet', I: Wallet }, { h: '/transactions', l: 'My Transactions', I: Receipt }, { h: '/interests', l: 'My Interest', I: Sparkles }, { h: '/notifications', l: 'Notifications', I: Bell }, { h: '/profile', l: 'Profile and KYC', I: User }].map(({ h, l, I }) => <Link key={h} href={h} onClick={() => setMenu(false)} className="flex items-center gap-3 px-5 py-3 text-sm text-ink"><I size={18} className="text-primary" />{l}</Link>)}
-              <a href={config.contact.whatsappUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3 px-5 py-3 text-sm text-ink"><MessageCircle size={18} className="text-[#25D366]" />Chat on WhatsApp</a>
+              <a href={config.contact.whatsappUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3 px-5 py-3 text-sm text-ink"><WhatsAppIcon size={18} className="text-[#25D366]" />Chat on WhatsApp</a>
             </nav>
             <div className="border-t border-cream-dark p-4">{isLoggedIn ? <button onClick={() => { logout(); setMenu(false); }} className="btn-outline w-full"><LogOut size={16} />Logout</button> : <button onClick={() => { setMenu(false); openLogin(); }} className="btn-primary w-full">Login or sign up</button>}</div>
           </aside>
