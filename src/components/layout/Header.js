@@ -25,24 +25,24 @@ export default function Header() {
     <>
       {config.announcement && <div className="bg-primary-dark px-4 py-1.5 text-center text-[11px] font-medium tracking-wide text-cream sm:text-xs">{config.announcement}</div>}
       <header className="sticky top-0 z-50 border-b border-cream-dark bg-white/95 backdrop-blur">
-        <div className="section flex h-16 items-center gap-3">
-          <button className="rounded-full p-2 text-primary hover:bg-cream lg:hidden" onClick={() => setMenu(true)} aria-label="Menu"><Menu size={22} /></button>
-          <Link href="/" className="flex items-center gap-2">
-            <span className="grid h-9 w-9 place-items-center rounded-lg bg-primary font-heading text-lg text-accent">{config.brand.shortName?.[0] || 'K'}</span>
-            <span className="whitespace-nowrap font-heading text-lg font-semibold text-primary sm:text-xl">{config.brand.name}</span>
+        <div className="section flex h-16 min-w-0 items-center gap-1.5 sm:gap-3">
+          <button className="shrink-0 rounded-full p-1.5 text-primary hover:bg-cream sm:p-2 lg:hidden" onClick={() => setMenu(true)} aria-label="Menu"><Menu size={22} /></button>
+          <Link href="/" className="flex min-w-0 items-center gap-1.5 sm:gap-2">
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-primary font-heading text-base text-accent sm:h-9 sm:w-9 sm:text-lg">{config.brand.shortName?.[0] || 'K'}</span>
+            <span className="truncate font-heading text-base font-semibold text-primary sm:text-xl">{config.brand.name}</span>
           </Link>
           <nav className="ml-4 hidden items-center lg:flex xl:ml-8">
             {config.nav.map((n) => <Link key={n.path} href={n.path} className={cls('whitespace-nowrap rounded-lg px-2 py-2 text-[13px] font-medium transition hover:bg-cream', path === n.path ? 'text-primary' : 'text-ink/80')}>{n.label}</Link>)}
           </nav>
           <form onSubmit={submit} className="ml-auto hidden md:block lg:hidden xl:block"><div className="relative"><Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search" className="h-10 w-40 rounded-full border border-cream-dark bg-cream/50 pl-9 pr-4 text-sm outline-none focus:border-primary" /></div></form>
-          <div className="ml-auto flex shrink-0 items-center gap-0.5 md:ml-0 xl:ml-0">
-            <Link href="/search" className="rounded-full p-2 text-primary hover:bg-cream md:hidden lg:block xl:hidden" aria-label="Search"><Search size={21} /></Link>
-            <Link href="/wishlist" className="relative rounded-full p-2 text-primary hover:bg-cream" aria-label="Wishlist"><Heart size={21} />{user?.wishlist?.length > 0 && <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-primary-dark">{user.wishlist.length}</span>}</Link>
-            <Link href="/cart" className="relative rounded-full p-2 text-primary hover:bg-cream" aria-label="Bag"><ShoppingBag size={21} />{cart?.count > 0 && <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-primary-dark">{cart.count}</span>}</Link>
+          <div className="ml-auto flex shrink-0 items-center gap-0 sm:gap-0.5 md:ml-0 xl:ml-0">
+            <Link href="/search" className="rounded-full p-1.5 text-primary hover:bg-cream sm:p-2 md:hidden lg:block xl:hidden" aria-label="Search"><Search size={21} /></Link>
+            <Link href="/wishlist" className="relative rounded-full p-1.5 text-primary hover:bg-cream sm:p-2" aria-label="Wishlist"><Heart size={21} />{user?.wishlist?.length > 0 && <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-primary-dark">{user.wishlist.length}</span>}</Link>
+            <Link href="/cart" className="relative rounded-full p-1.5 text-primary hover:bg-cream sm:p-2" aria-label="Bag"><ShoppingBag size={21} />{cart?.count > 0 && <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-primary-dark">{cart.count}</span>}</Link>
             {isLoggedIn && <Link href="/notifications" className="relative hidden rounded-full p-2 text-primary hover:bg-cream sm:block" aria-label="Notifications"><Bell size={21} />{unread > 0 && <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-accent" />}</Link>}
             {isLoggedIn ? <Link href="/wallet" className="ml-1 hidden items-center gap-2 rounded-full border border-cream-dark py-1 pl-1 pr-3 text-sm font-semibold text-primary hover:bg-cream sm:flex"><span className="grid h-7 w-7 place-items-center rounded-full bg-primary text-xs text-white">{(user.name || 'U')[0]}</span>{(user.name || 'Account').split(' ')[0]}</Link>
               : <button onClick={openLogin} className="ml-1 hidden items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark sm:flex"><User size={16} />Login</button>}
-            {!isLoggedIn && <button onClick={openLogin} className="rounded-full p-2 text-primary sm:hidden" aria-label="Login"><User size={21} /></button>}
+            {!isLoggedIn && <button onClick={openLogin} className="rounded-full p-1.5 text-primary sm:hidden" aria-label="Login"><User size={21} /></button>}
           </div>
         </div>
       </header>
