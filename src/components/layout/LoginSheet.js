@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Phone, KeyRound } from 'lucide-react';
 import Modal from '@/components/ui/Modal';
 import { Spinner } from '@/components/ui/Bits';
@@ -17,6 +18,7 @@ function LoginForm({ onClose }) {
   const { config } = useConfig();
   const { login } = useAuth();
   const toast = useToast();
+  const isAdmin = usePathname()?.startsWith('/admin');
   const [step, setStep] = useState('mobile');
   const [mobile, setMobile] = useState('');
   const [otp, setOtp] = useState('');
@@ -45,7 +47,8 @@ function LoginForm({ onClose }) {
       {step === 'mobile' ? (
         <form onSubmit={send} className="space-y-4">
           <div><label className="label">Mobile number</label><div className="relative"><Phone size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" /><input className="input pl-11" inputMode="numeric" maxLength={10} placeholder="Enter mobile number" value={mobile} onChange={(e) => setMobile(e.target.value.replace(/\D/g, ''))} autoFocus /></div></div>
-          {config.demo?.customerMobile && <button type="button" onClick={() => setMobile(config.demo.customerMobile)} className="text-xs font-semibold text-primary underline">Use demo customer ({config.demo.customerMobile})</button>}
+          {isAdmin ? config.demo?.adminMobile && <button type="button" onClick={() => setMobile(config.demo.adminMobile)} className="text-xs font-semibold text-primary underline">Use demo admin ({config.demo.adminMobile})</button>
+            : config.demo?.customerMobile && <button type="button" onClick={() => setMobile(config.demo.customerMobile)} className="text-xs font-semibold text-primary underline">Use demo customer ({config.demo.customerMobile})</button>}
           {err && <p className="text-sm text-danger">{err}</p>}
           <button className="btn-primary w-full" disabled={busy || mobile.length !== 10}>{busy ? <Spinner /> : 'Continue'}</button>
           <p className="text-center text-[11px] text-muted">By continuing, you agree to our Terms of Use and Privacy Policy.</p>

@@ -7,12 +7,12 @@ import BottomNav from './BottomNav';
 import WhatsAppFab from './WhatsAppFab';
 import PreviewFab from './PreviewFab';
 
-/** Wraps pages with header/footer/bottom nav, except on the device-preview route. */
+/** Wraps pages with header/footer/bottom nav, except on the device-preview and admin routes. */
 export default function SiteChrome({ children }) {
   const path = usePathname();
   // Inside the device preview iframe, behave like a phone: no desktop scrollbar stealing width
   useEffect(() => { if (window.self !== window.top) document.documentElement.classList.add('in-preview'); }, []);
-  if (path?.startsWith('/preview')) return <main className="flex-1">{children}</main>;
+  if (path?.startsWith('/preview') || path?.startsWith('/admin')) return <main className="flex-1">{children}</main>;
   return (
     <>
       <Header />

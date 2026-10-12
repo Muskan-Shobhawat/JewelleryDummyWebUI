@@ -3,7 +3,7 @@ import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, Search, Heart, ShoppingBag, User, Bell, X, LogOut, Wallet, Receipt, Sparkles } from 'lucide-react';
+import { Menu, Search, Heart, ShoppingBag, User, Bell, X, LogOut, Wallet, Receipt, Sparkles, ShieldCheck } from 'lucide-react';
 import { useConfig } from '@/context/ConfigContext';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
@@ -40,6 +40,7 @@ export default function Header() {
             <Link href="/search" className="rounded-full p-1.5 text-primary hover:bg-cream sm:p-2 md:hidden" aria-label="Search"><Search size={21} /></Link>
             <Link href="/wishlist" className="relative rounded-full p-1.5 text-primary hover:bg-cream sm:p-2" aria-label="Wishlist"><Heart size={21} />{user?.wishlist?.length > 0 && <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-primary-dark">{user.wishlist.length}</span>}</Link>
             <Link href="/cart" className="relative rounded-full p-1.5 text-primary hover:bg-cream sm:p-2" aria-label="Bag"><ShoppingBag size={21} />{cart?.count > 0 && <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-primary-dark">{cart.count}</span>}</Link>
+            {user?.role === 'ADMIN' && <Link href="/admin" className="hidden rounded-full p-2 text-primary hover:bg-cream sm:block" aria-label="Admin panel" title="Admin panel"><ShieldCheck size={21} /></Link>}
             {isLoggedIn && <Link href="/notifications" className="relative hidden rounded-full p-2 text-primary hover:bg-cream sm:block" aria-label="Notifications"><Bell size={21} />{unread > 0 && <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-accent" />}</Link>}
             {isLoggedIn ? <Link href="/wallet" className="ml-1 hidden items-center gap-2 rounded-full border border-cream-dark py-1 pl-1 pr-3 text-sm font-semibold text-primary hover:bg-cream sm:flex"><span className="grid h-7 w-7 place-items-center rounded-full bg-primary text-xs text-white">{(user.name || 'U')[0]}</span>{(user.name || 'Account').split(' ')[0]}</Link>
               : <button onClick={openLogin} className="ml-1 hidden items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark sm:flex"><User size={16} />Login</button>}
@@ -60,7 +61,7 @@ export default function Header() {
             <nav className="flex-1 overflow-y-auto py-2">
               {config.nav.map((n) => <Link key={n.path} href={n.path} onClick={() => setMenu(false)} className={cls('block px-5 py-3 text-sm font-medium', path === n.path ? 'bg-cream text-primary' : 'text-ink')}>{n.label}</Link>)}
               <div className="my-2 border-t border-cream-dark" />
-              {[{ h: '/wallet', l: 'My Wallet', I: Wallet }, { h: '/transactions', l: 'My Transactions', I: Receipt }, { h: '/interests', l: 'My Interest', I: Sparkles }, { h: '/notifications', l: 'Notifications', I: Bell }, { h: '/profile', l: 'Profile and KYC', I: User }].map(({ h, l, I }) => <Link key={h} href={h} onClick={() => setMenu(false)} className="flex items-center gap-3 px-5 py-3 text-sm text-ink"><I size={18} className="text-primary" />{l}</Link>)}
+              {[{ h: '/wallet', l: 'My Wallet', I: Wallet }, { h: '/transactions', l: 'My Transactions', I: Receipt }, { h: '/interests', l: 'My Interest', I: Sparkles }, { h: '/notifications', l: 'Notifications', I: Bell }, { h: '/profile', l: 'Profile and KYC', I: User }, ...(user?.role === 'ADMIN' ? [{ h: '/admin', l: 'Admin panel', I: ShieldCheck }] : [])].map(({ h, l, I }) => <Link key={h} href={h} onClick={() => setMenu(false)} className="flex items-center gap-3 px-5 py-3 text-sm text-ink"><I size={18} className="text-primary" />{l}</Link>)}
               <a href={config.contact.whatsappUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3 px-5 py-3 text-sm text-ink"><WhatsAppIcon size={18} className="text-[#25D366]" />Chat on WhatsApp</a>
             </nav>
             <div className="border-t border-cream-dark p-4">{isLoggedIn ? <button onClick={() => { logout(); setMenu(false); }} className="btn-outline w-full"><LogOut size={16} />Logout</button> : <button onClick={() => { setMenu(false); openLogin(); }} className="btn-primary w-full">Login or sign up</button>}</div>
